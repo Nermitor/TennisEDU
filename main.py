@@ -1,7 +1,6 @@
 from dataclasses import dataclass
 
 import pygame as pg
-from pygame.color import THECOLORS
 
 
 @dataclass
@@ -11,22 +10,20 @@ class Circle:
     speed_x: int
     speed_y: int
     radius: int
-    color: tuple[int, int, int, int]
+    color: list
 
 
 def main():
-    pg.init()
-    screen_size = (800, 500)
-    screen = pg.display.set_mode(screen_size)
-
-    speed_x, speed_y = 10, 10
-    diameter = 50
+    screen_size = [800, 500]
     fps = 60
 
-    circle = Circle(100, 100, -10, 10, 20, THECOLORS['red'])
+    pg.init()  # Инициализация модуля
+    screen = pg.display.set_mode(screen_size)  # Настройка экрана
 
-    timer = pg.time.Clock()
+    # Круг с центром в точке (100; 100), скоростью по x = -10, y = 10, радиусом 20, и красным цветом.
+    circle = Circle(100, 100, -1, 1, 20, [255, 0, 0])
 
+    timer = pg.time.Clock()  # Таймер, будет следить за временем
     running = True
     while running:
         timer.tick(fps)
@@ -34,18 +31,22 @@ def main():
             if event.type == pg.QUIT:
                 running = False
 
+        # Тут будет обновление и отрисовка
+
         circle.x += circle.speed_x
         circle.y += circle.speed_y
 
-        if circle.x + circle.radius >= screen.get_width() or circle.x - circle.radius <= 0:
+        top, bottom = circle.y - circle.radius, circle.y + circle.radius
+        left, right = circle.x - circle.radius, circle.x + circle.radius
+
+        if right >= screen.get_width() or left <= 0:
             circle.speed_x *= -1
-        if circle.y + circle.radius >= screen.get_height() or circle.y - circle.radius <= 0:
+        if bottom >= screen.get_height() or top <= 0:
             circle.speed_y *= -1
 
-        pg.draw.circle(screen, circle.color, (circle.x, circle.y), circle.radius)
-
-        pg.display.flip()
         screen.fill((0, 0, 0))
+        pg.draw.circle(screen, circle.color, (circle.x, circle.y), circle.radius)
+        pg.display.update()
 
 
 if __name__ == '__main__':
