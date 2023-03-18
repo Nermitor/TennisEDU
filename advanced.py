@@ -99,7 +99,7 @@ def main():
             if ball.y in range(second_rocket.y - 10, second_rocket.y + second_rocket.height + 1 + 10):
                 ball.speed_x = -abs(ball.speed_x)
 
-        screen.fill((0, 0, 0))
+        screen.fill((20, 20, 20))
         pg.draw.circle(screen, ball.color, (ball.x, ball.y), ball.radius)
         pg.draw.rect(screen, first_rocket.color,
                      [first_rocket.x, first_rocket.y, first_rocket.width, first_rocket.height])

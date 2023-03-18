@@ -42,7 +42,7 @@ def main():
         if bottom >= screen.get_height() or top <= 0:
             ball.speed_y *= -1
 
-        screen.fill((0, 0, 0))
+        screen.fill((20, 20, 20))
         pg.draw.circle(screen, ball.color, (ball.x, ball.y), ball.radius)
         pg.display.update()
 
